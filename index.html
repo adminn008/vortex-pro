@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vortex Chronos | Professional Clock</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="bg-animate"></div>
+    
+    <div class="container">
+        <div class="glass-card">
+            <header>
+                <span id="date">QUINTA, 19 DE MARÇO</span>
+                <button id="fullscreen-btn" onclick="toggleFullscreen()">⛶ TELA CHEIA</button>
+            </header>
+
+            <div class="clock-display">
+                <h1 id="time">00:00:00</h1>
+                <span id="ampm">PM</span>
+            </div>
+
+            <div class="controls">
+                <div class="control-item">
+                    <span class="label">CRONÔMETRO</span>
+                    <h2 id="stopwatch">00:00</h2>
+                    <div class="btns">
+                        <button onclick="startStopwatch()" id="sw-btn">INICIAR</button>
+                        <button onclick="resetStopwatch()">ZERAR</button>
+                    </div>
+                </div>
+                
+                <div class="control-item ad-space">
+                    <small>PATROCINADO</small>
+                    <div class="ad-placeholder">SEU ADSENSE AQUI</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

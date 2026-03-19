@@ -24,11 +24,16 @@ function copyPix(chave) {
     });
 }
 
-function toggleFullScreen() {
+function toggleFullScreen(event) {
+    // Não ativa tela cheia se clicar no botão de doação
+    if (event.target.closest('.pix-button')) return;
+
     if (!document.fullscreenElement) {
         document.documentElement.requestFullscreen().catch(() => {});
     } else {
-        document.exitFullscreen();
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        }
     }
 }
 

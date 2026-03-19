@@ -8,65 +8,100 @@ body, html {
     height: 100%;
     background-color: #000000;
     color: #ffffff;
-    font-family: 'Inter', sans-serif;
-    overflow: hidden;
+    font-family: 'Inter', -apple-system, sans-serif;
+    overflow-x: hidden;
 }
 
 .vortex-container {
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    padding: 50px 20px;
-    cursor: pointer;
+    padding: 40px 20px;
 }
 
 .vortex-brand {
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-weight: 900;
-    letter-spacing: 0.6rem;
-    color: #444;
+    letter-spacing: 0.5rem;
+    color: #333;
 }
 
 .vortex-main {
     text-align: center;
-    width: 100%;
+    cursor: pointer;
+    margin: 40px 0;
 }
 
 .vortex-date {
-    font-size: 2vw;
+    font-size: 1.8vw;
     text-transform: uppercase;
-    letter-spacing: 0.4rem;
+    letter-spacing: 0.3rem;
     color: #888;
-    margin-bottom: 5px;
 }
 
 .vortex-time {
-    font-size: 24vw; /* Relógio ainda maior para ocupar a tela */
+    font-size: 22vw;
     font-weight: 800;
-    line-height: 0.8;
-    letter-spacing: -0.8vw;
+    line-height: 0.9;
+    letter-spacing: -0.6vw;
     font-variant-numeric: tabular-nums;
 }
 
-.vortex-divider {
-    height: 1px;
-    background: linear-gradient(90deg, transparent, #00ff41, transparent); /* Verde sutil para remeter ao Brasil */
-    width: 40%;
-    margin: 40px auto;
-}
-
 .vortex-region {
-    font-size: 1.5vw;
-    font-weight: 600;
-    color: #00ff41; /* Verde "Matrix/Brasil" para contraste */
-    letter-spacing: 0.5rem;
+    font-size: 1.2vw;
+    color: #00ff41;
+    letter-spacing: 0.2rem;
     text-transform: uppercase;
+    margin-top: 10px;
 }
 
+/* Área de Doação */
+.donation-box {
+    background: #0a0a0a;
+    border: 1px dashed #222;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 700px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.donation-box p {
+    font-size: 0.9rem;
+    color: #aaa;
+    line-height: 1.5;
+    margin-bottom: 10px;
+}
+
+.pix-badge {
+    display: inline-block;
+    background: #00ff411a;
+    color: #00ff41;
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+/* Rodapé */
 .vortex-footer {
-    font-size: 0.7rem;
-    color: #1a1a1a;
-    letter-spacing: 2px;
+    text-align: center;
+    border-top: 1px solid #111;
+    width: 100%;
+    padding-top: 20px;
+}
+
+.footer-line {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.footer-copyright {
+    font-size: 0.75rem;
+    color: #333;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }

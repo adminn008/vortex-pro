@@ -6,20 +6,22 @@
     <title>Vortex Chronos | Tempo Real</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body onclick="toggleFullScreen()">
+<body>
     <div class="vortex-container">
         <header class="vortex-brand">VORTEX CHRONOS</header>
 
-        <main class="vortex-main">
+        <main class="vortex-main" onclick="toggleFullScreen()">
             <div id="vortex-date" class="vortex-date"></div>
             <div id="vortex-clock" class="vortex-time">00:00:00</div>
             <div class="vortex-region">Sincronizando com o Horário Local</div>
         </main>
 
         <section class="donation-box">
-            <p>O <strong>Vortex Chronos</strong> é mantido pela comunidade. Sua contribuição via PIX garante que continuemos operando com latência zero e sem anúncios</p>
-            <div class="pix-badge">Chave PIX:
-                <span>0df8fcd3-dffc-4265-8464-5a60badef88c</span></div>
+            <p>O <strong>Vortex Chronos</strong> é mantido pela comunidade. Sua contribuição via PIX garante que continuemos operando com latência zero e sem anúncios.</p>
+            
+            <button class="pix-button" onclick="copyPix('0df8fcd3-dffc-4265-8464-5a60badef88c')">
+                <span id="pix-text">CONTRIBUIR VIA PIX</span>
+            </button>
         </section>
             
         <footer class="vortex-footer">
@@ -28,8 +30,9 @@
             </div>
             <div class="footer-copyright">
                 © 2024 (v1.0) - 2026 (v2.8) Vortex Chronos Online - Todos os direitos reservados.
-                </div
+            </div>
         </footer>
+    </div>
 
     <script src="script.js"></script>
 </body>

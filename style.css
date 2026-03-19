@@ -117,3 +117,13 @@ body, html {
 .fade-effect {
     animation: fadeInOut 1s ease-in-out;
 }
+
+.footer-nav { margin-top: 15px; }
+.footer-nav a { 
+    color: #444; 
+    text-decoration: none; 
+    font-size: 0.8rem; 
+    letter-spacing: 2px;
+    transition: color 0.3s;
+}
+.footer-nav a:hover { color: #00ff41; }

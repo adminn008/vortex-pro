@@ -3,23 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Relógio Digital Pro</title>
+    <title>Relógio Fullscreen - Vortex Chronos</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="fullscreen-bg">
+        <header class="site-brand">VORTEX CHRONOS</header>
 
-    <div id="date" class="date-display">Carregando data...</div>
-    
-    <div class="clock-container">
-        <div id="hour" class="digit">00</div>
-        <div class="separator">:</div>
-        <div id="minute" class="digit">00</div>
-        <div class="separator">:</div>
-        <div id="second" class="digit">00</div>
+        <main class="clock-content">
+            <div id="date" class="date-text"></div>
+
+            <div class="main-clock">
+                <span id="hour">00</span>
+                <span class="separator">:</span>
+                <span id="minute">00</span>
+                <span class="seconds" id="second">00</span>
+            </div>
+
+            <div id="location" class="location-text">Detectando sua cidade...</div>
+        </main>
+        
+        <button class="fs-button" onclick="toggleFS()">Tela Cheia</button>
     </div>
-
-    <div id="location" class="location-display">Buscando sua cidade...</div>
-
     <script src="script.js"></script>
 </body>
 </html>

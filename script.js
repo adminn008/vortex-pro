@@ -1,3 +1,5 @@
+let ultimaData = "";
+
 function updateVortex() {
     const agora = new Date();
     
@@ -12,8 +14,27 @@ function updateVortex() {
     const dataFormatada = agora.toLocaleDateString('pt-BR', opcoes);
     const dataFinal = dataFormatada.charAt(0).toUpperCase() + dataFormatada.slice(1);
 
-    document.getElementById('vortex-date').textContent = dataFinal;
-    document.getElementById('footer-full-date').textContent = dataFinal;
+    // Se a data mudou (ou é a primeira vez que carrega)
+    if (dataFinal !== ultimaData) {
+        const elementoTopo = document.getElementById('vortex-date');
+        const elementoRodape = document.getElementById('footer-full-date');
+
+        // Aplica a animação de fade
+        elementoTopo.classList.add('fade-effect');
+        elementoRodape.classList.add('fade-effect');
+
+        // Atualiza o texto
+        elementoTopo.textContent = dataFinal;
+        elementoRodape.textContent = dataFinal;
+
+        // Remove a classe após a animação terminar para poder usar de novo amanhã
+        setTimeout(() => {
+            elementoTopo.classList.remove('fade-effect');
+            elementoRodape.classList.remove('fade-effect');
+        }, 1000);
+
+        ultimaData = dataFinal;
+    }
 }
 
 function copyPix(chave) {
@@ -25,7 +46,6 @@ function copyPix(chave) {
 }
 
 function toggleFullScreen(event) {
-    // Não ativa tela cheia se clicar no botão de doação
     if (event.target.closest('.pix-button')) return;
 
     if (!document.fullscreenElement) {

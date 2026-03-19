@@ -46,16 +46,26 @@ function copyPix(chave) {
 }
 
 function toggleFullScreen(event) {
+    // 1. Se clicar no botão de PIX, não faz nada (deixa o copyPix trabalhar)
     if (event.target.closest('.pix-button')) return;
 
+    // 2. Se clicar em qualquer lugar do rodapé (links incluídos), NÃO ativa tela cheia
+    if (event.target.closest('.footer-area')) return;
+
+    // 3. Lógica da tela cheia
     if (!document.fullscreenElement) {
-        document.documentElement.requestFullscreen().catch(() => {});
+        document.documentElement.requestFullscreen().catch(err => {
+            console.log(`Erro ao tentar ativar tela cheia: ${err.message}`);
+        });
     } else {
         if (document.exitFullscreen) {
             document.exitFullscreen();
         }
     }
 }
+
+// As outras funções (updateVortex e copyPix) continuam iguais ao código anterior.
+
 
 setInterval(updateVortex, 1000);
 updateVortex();

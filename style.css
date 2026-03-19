@@ -8,7 +8,7 @@ body, html {
     height: 100%;
     background-color: #000000;
     color: #ffffff;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family: 'Inter', sans-serif;
     overflow: hidden;
 }
 
@@ -18,20 +18,15 @@ body, html {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    padding: 60px 20px;
+    padding: 50px 20px;
     cursor: pointer;
 }
 
 .vortex-brand {
-    font-size: 1.2rem;
+    font-size: 1rem;
     font-weight: 900;
-    letter-spacing: 0.8rem;
-    color: #333;
-    transition: color 0.5s;
-}
-
-.vortex-container:hover .vortex-brand {
-    color: #fff;
+    letter-spacing: 0.6rem;
+    color: #444;
 }
 
 .vortex-main {
@@ -40,38 +35,38 @@ body, html {
 }
 
 .vortex-date {
-    font-size: 1.8vw;
+    font-size: 2vw;
     text-transform: uppercase;
-    letter-spacing: 0.3rem;
-    color: #666;
-    margin-bottom: 10px;
+    letter-spacing: 0.4rem;
+    color: #888;
+    margin-bottom: 5px;
 }
 
 .vortex-time {
-    font-size: 22vw; /* Máximo impacto visual */
+    font-size: 24vw; /* Relógio ainda maior para ocupar a tela */
     font-weight: 800;
-    line-height: 0.9;
-    letter-spacing: -0.5vw;
+    line-height: 0.8;
+    letter-spacing: -0.8vw;
     font-variant-numeric: tabular-nums;
 }
 
 .vortex-divider {
-    height: 2px;
-    background: linear-gradient(90deg, transparent, #333, transparent);
-    width: 60%;
-    margin: 30px auto;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #00ff41, transparent); /* Verde sutil para remeter ao Brasil */
+    width: 40%;
+    margin: 40px auto;
 }
 
-.vortex-city {
-    font-size: 2.5vw;
-    font-weight: 300;
-    color: #007AFF; /* Azul sistema para localização */
+.vortex-region {
+    font-size: 1.5vw;
+    font-weight: 600;
+    color: #00ff41; /* Verde "Matrix/Brasil" para contraste */
+    letter-spacing: 0.5rem;
     text-transform: uppercase;
-    letter-spacing: 0.2rem;
 }
 
 .vortex-footer {
-    font-size: 0.8rem;
-    color: #222;
-    letter-spacing: 1px;
+    font-size: 0.7rem;
+    color: #1a1a1a;
+    letter-spacing: 2px;
 }

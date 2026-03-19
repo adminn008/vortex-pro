@@ -2,43 +2,18 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vortex Chronos | Ultra Edition</title>
+    <title>Minha Lista de Tarefas</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body onclick="toggleFullscreen()">
-    <div id="dynamic-bg"></div>
-    <div id="vignette"></div>
-
-    <div class="content-wrapper">
-        <div class="main-clock">
-            <p id="full-date">QUINTA, 19 DE MARÇO DE 2026</p>
-            <h1 id="digital-time">00:00:00</h1>
-            <div class="glow-bar"></div>
+<body>
+    <div class="container">
+        <h2>Lista de Tarefas</h2>
+        <div class="input-group">
+            <input type="text" id="taskInput" placeholder="O que precisa ser feito?">
+            <button onclick="addTask()">Adicionar</button>
         </div>
-
-        <div class="bottom-dock">
-            <div class="tool-section">
-                <div class="stopwatch-pro">
-                    <span id="sw-display">00:00</span>
-                    <button onclick="event.stopPropagation(); startSW()" id="btn-sw">START</button>
-                    <button onclick="event.stopPropagation(); resetSW()">RESET</button>
-                </div>
-                <div class="ad-banner">
-                    <small>ANÚNCIO</small>
-                    <div id="adsense-here">ADSENSE</div>
-                </div>
-            </div>
-
-            <div class="gallery-container">
-                <div class="thumb" onclick="event.stopPropagation(); changeBg('gaming')"><span>GAMING</span></div>
-                <div class="theme-btn" onclick="event.stopPropagation(); changeBg('cyber')"><span>CYBER</span></div>
-                <div class="theme-btn" onclick="event.stopPropagation(); changeBg('nature')"><span>NATURE</span></div>
-                <div class="theme-btn" onclick="event.stopPropagation(); changeBg('minimal')"><span>DARK</span></div>
-            </div>
-        </div>
+        <ul id="taskList"></ul>
     </div>
-
     <script src="script.js"></script>
 </body>
 </html>

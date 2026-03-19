@@ -3,145 +3,160 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CineVertex - Streaming Gratuito</title>
+    <title>CineVertex | Cinema Unlimited</title>
     <style>
-        :root {
-            --primary: #e50914;
-            --bg: #0f0f0f;
-            --card-bg: #1f1f1f;
-            --text: #ffffff;
-        }
-
-        body {
-            background-color: var(--bg);
-            color: var(--text);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 20px;
-        }
-
-        header {
-            text-align: center;
-            padding: 40px 0;
-        }
-
-        h1 { color: var(--primary); font-size: 2.5rem; letter-spacing: 2px; }
-
-        .container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 25px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .movie-card {
-            background: var(--card-bg);
-            border-radius: 10px;
-            overflow: hidden;
-            transition: transform 0.3s;
-            cursor: pointer;
-            border: 1px solid #333;
-        }
-
-        .movie-card:hover { transform: scale(1.05); border-color: var(--primary); }
-
-        .movie-card img { width: 100%; height: 280px; object-fit: cover; }
-
-        .info { padding: 15px; }
-        .info h3 { margin: 0; font-size: 1rem; }
-
-        /* Modal do Player */
-        #player-modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-        }
-
-        #ad-screen { text-align: center; }
-
-        .btn-unlock {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            font-weight: bold;
-            cursor: pointer;
-            border-radius: 5px;
-            margin-top: 20px;
-        }
-
-        iframe { width: 80%; height: 60%; border: none; display: none; }
+        :root { --primary: #ff0000; --bg: #0a0a0a; --card: #1a1a1a; --text: #eee; }
         
-        .close-btn { position: absolute; top: 20px; right: 30px; font-size: 30px; cursor: pointer; }
+        body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; margin: 0; padding-bottom: 50px; }
+
+        /* Header e Busca */
+        header { 
+            background: rgba(0,0,0,0.9); padding: 20px 5%; 
+            display: flex; justify-content: space-between; align-items: center;
+            position: sticky; top: 0; z-index: 100; border-bottom: 2px solid var(--primary);
+        }
+        h1 { color: var(--primary); margin: 0; font-size: 1.8rem; letter-spacing: 2px; }
+        
+        #busca { 
+            background: #222; border: 1px solid #444; color: white; 
+            padding: 10px 15px; border-radius: 5px; width: 250px; outline: none;
+        }
+
+        /* Filtros */
+        .filtros { padding: 20px 5%; display: flex; gap: 10px; overflow-x: auto; }
+        .filter-btn { 
+            background: var(--card); border: 1px solid #333; color: white; 
+            padding: 8px 15px; border-radius: 20px; cursor: pointer; transition: 0.3s;
+        }
+        .filter-btn:hover, .active { background: var(--primary); border-color: var(--primary); }
+
+        /* Grid de Filmes */
+        .grid { 
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); 
+            gap: 25px; padding: 0 5%; 
+        }
+
+        .movie-card { 
+            background: var(--card); border-radius: 8px; overflow: hidden; 
+            transition: 0.4s; cursor: pointer; border: 1px solid transparent;
+            animation: subir 0.5s ease;
+        }
+        .movie-card:hover { transform: translateY(-10px); border-color: var(--primary); }
+        .movie-card img { width: 100%; height: 260px; object-fit: cover; }
+        
+        .info { padding: 12px; }
+        .info h3 { margin: 0; font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .info p { font-size: 0.75rem; color: #888; height: 35px; overflow: hidden; margin: 8px 0; }
+
+        /* Modal Player */
+        #modal { 
+            display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98); 
+            z-index: 1000; align-items: center; justify-content: center;
+        }
+        .modal-box { width: 90%; max-width: 850px; position: relative; }
+        iframe { width: 100%; aspect-ratio: 16/9; border: 2px solid var(--primary); display: none; }
+        
+        .ad-gate { text-align: center; padding: 40px; border: 1px dashed var(--primary); }
+        .btn-unlock { 
+            background: var(--primary); color: white; padding: 15px 30px; 
+            border: none; border-radius: 5px; cursor: pointer; font-weight: bold; margin-top: 20px;
+        }
+
+        @keyframes subir { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>CINE VERTEX</h1>
-    <p>O melhor do cinema clássico e independente</p>
+    <h1>CINEVERTEX</h1>
+    <input type="text" id="busca" placeholder="O que vamos assistir?" onkeyup="filtrar()">
 </header>
 
-<div class="container" id="movie-grid">
-    <div class="movie-card" onclick="openAd('https://www.youtube.com/embed/H966m50XJm8')">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/3/30/Night_of_the_Living_Dead_poster.jpg" alt="A Noite dos Mortos Vivos">
-        <div class="info">
-            <h3>A Noite dos Mortos Vivos (1968)</h3>
-        </div>
-    </div>
-
-    <div class="movie-card" onclick="openAd('https://www.youtube.com/embed/v9iSAsL6lSg')">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/2/2b/Metropolis_poster.jpg" alt="Metropolis">
-        <div class="info">
-            <h3>Metrópolis (1927)</h3>
-        </div>
-    </div>
+<div class="filtros" id="generos">
+    <button class="filter-btn active" onclick="setFiltro('Todos')">Todos</button>
+    <button class="filter-btn" onclick="setFiltro('Terror')">Terror</button>
+    <button class="filter-btn" onclick="setFiltro('Ficção Científica')">Ficção</button>
+    <button class="filter-btn" onclick="setFiltro('Suspense')">Suspense</button>
 </div>
 
-<div id="player-modal">
-    <span class="close-btn" onclick="closePlayer()">&times;</span>
-    
-    <div id="ad-screen">
-        <h2>O filme está quase pronto!</h2>
-        <p>Clique no botão abaixo para liberar o acesso (abre em nova guia).</p>
-        <button class="btn-unlock" onclick="startAd()">LIBERAR FILME AGORA</button>
-    </div>
+<div class="grid" id="movie-grid"></div>
 
-    <iframe id="video-player" src="" allowfullscreen></iframe>
+<div id="modal">
+    <div class="modal-box">
+        <span onclick="fechar()" style="position:absolute; top:-40px; right:0; cursor:pointer; font-size:35px">×</span>
+        
+        <div id="ad-area" class="ad-gate">
+            <h2>🔒 CONTEÚDO PROTEGIDO</h2>
+            <p>Clique abaixo para liberar o acesso ao filme em HD.</p>
+            <button class="btn-unlock" onclick="liberar()">LIBERAR AGORA</button>
+        </div>
+
+        <iframe id="video" src="" allowfullscreen></iframe>
+    </div>
 </div>
 
 <script>
-    let currentVideoUrl = "";
+    let todosFilmes = [];
+    let filtroAtual = 'Todos';
 
-    function openAd(url) {
-        currentVideoUrl = url;
-        document.getElementById('player-modal').style.display = 'flex';
-        document.getElementById('ad-screen').style.display = 'block';
-        document.getElementById('video-player').style.display = 'none';
+    // Carrega o JSON
+    fetch('filmes.json')
+        .then(res => res.json())
+        .then(data => {
+            todosFilmes = data;
+            render(todosFilmes);
+        });
+
+    function render(lista) {
+        const grid = document.getElementById('movie-grid');
+        grid.innerHTML = lista.map(f => `
+            <div class="movie-card" onclick="abrir('${f.video}')">
+                <img src="${f.poster}" alt="${f.titulo}">
+                <div class="info">
+                    <h3>${f.titulo}</h3>
+                    <p>${f.sinopse}</p>
+                    <small>${f.ano} • ${f.genero}</small>
+                </div>
+            </div>
+        `).join('');
     }
 
-    function startAd() {
-        // Simula a abertura do link de anúncio (AdSense/Encurtador)
-        window.open('https://google.com', '_blank'); // Aqui você colocaria seu link do Adsterra ou Encurtador
-        
-        // Simula um delay de carregamento e libera o filme
-        setTimeout(() => {
-            document.getElementById('ad-screen').style.display = 'none';
-            const player = document.getElementById('video-player');
-            player.src = currentVideoUrl;
-            player.style.display = 'block';
-        }, 1000);
+    function filtrar() {
+        const termo = document.getElementById('busca').value.toLowerCase();
+        const resultado = todosFilmes.filter(f => 
+            (f.titulo.toLowerCase().includes(termo)) && 
+            (filtroAtual === 'Todos' || f.genero === filtroAtual)
+        );
+        render(resultado);
     }
 
-    function closePlayer() {
-        document.getElementById('player-modal').style.display = 'none';
-        document.getElementById('video-player').src = "";
+    function setFiltro(g) {
+        filtroAtual = g;
+        document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+        event.target.classList.add('active');
+        filtrar();
+    }
+
+    // Lógica do Player e Ad
+    let videoPendente = "";
+    function abrir(url) {
+        videoPendente = url;
+        document.getElementById('modal').style.display = 'flex';
+        document.getElementById('ad-area').style.display = 'block';
+        document.getElementById('video').style.display = 'none';
+    }
+
+    function liberar() {
+        window.open('https://www.google.com', '_blank'); // Troque pelo seu link de AdSense/Encurtador
+        document.getElementById('ad-area').style.display = 'none';
+        const player = document.getElementById('video');
+        player.src = videoPendente;
+        player.style.display = 'block';
+    }
+
+    function fechar() {
+        document.getElementById('modal').style.display = 'none';
+        document.getElementById('video').src = "";
     }
 </script>
 

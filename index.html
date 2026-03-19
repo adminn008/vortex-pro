@@ -6,14 +6,14 @@
     <title>Vortex Chronos | Tempo Real</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body onclick="toggleFullScreen(event)">
-    <div class="vortex-container">
+<body> 
+    <div class="vortex-container" onclick="toggleFullScreen(event)">
         <header class="vortex-brand">VORTEX CHRONOS</header>
 
         <main class="vortex-main">
             <div id="vortex-date" class="vortex-date"></div>
             <div id="vortex-clock" class="vortex-time">00:00:00</div>
-            <div class="vortex-region">Sincronizado com o Horário Local</div>
+            <div class="vortex-region">Sincronizando com o Horário Local</div>
         </main>
 
         <section class="donation-box hide-on-fs">
@@ -21,19 +21,25 @@
             <button class="pix-button" onclick="copyPix('0df8fcd3-dffc-4265-8464-5a60badef88c')">
                 <span id="pix-text">CONTRIBUIR VIA PIX</span>
             </button>
-            <p>Clique em qualquer lugar para ativar a tela cheia.</p>
         </section>
             
-        <footer class="vortex-footer hide-on-fs">
+        <footer class="vortex-footer hide-on-fs footer-area">
             <div class="footer-line">
                 🇧🇷 Brasil (UTC-3) - Horário Oficial Brasileiro • <span id="footer-full-date"></span>
             </div>
             <div class="footer-copyright">
                 © 2024 (v1.0) - 2026 (v2.8) Vortex Chronos Online - Todos os direitos reservados.
-                <div class="footer-nav">
-    <a href="cronometro.html" target="_blank">CRONÔMETRO</a> • 
-    <a href="global.html" target="_blank">MUNDO</a> • 
-    <a href="foco.html" target="_blank">FOCO</a>
+            </div>
+            <div class="footer-nav">
+                <a href="cronometro.html" target="_blank">CRONÔMETRO</a> • 
+                <a href="global.html" target="_blank">MUNDO</a> • 
+                <a href="foco.html" target="_blank">FOCO</a>
+            </div>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+
 </div>
 
             </div>

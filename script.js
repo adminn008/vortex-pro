@@ -63,13 +63,10 @@ function copyPix(chave) {
     });
 }
 
-function toggleFullScreen(event) {
-    if (event.target.closest('.pix-button')) return;
-    if (event.target.closest('.footer-area')) return;
-
+function toggleFullScreen() {
     if (!document.fullscreenElement) {
         document.documentElement.requestFullscreen().catch(err => {
-            console.log(`Erro ao ativar tela cheia: ${err.message}`);
+            console.log(`Erro: ${err.message}`);
         });
     } else {
         if (document.exitFullscreen) {
@@ -77,6 +74,17 @@ function toggleFullScreen(event) {
         }
     }
 }
+
+// O navegador já cuida do "ESC" e do "Voltar" do Android sozinho 
+// quando usamos a API de Fullscreen, mas vamos garantir que o 
+// layout se comporte bem ouvindo o evento de mudança:
+document.addEventListener('fullscreenchange', () => {
+    if (!document.fullscreenElement) {
+        console.log("Saiu da tela cheia");
+        // O CSS acima já vai fazer o botão reaparecer sozinho aqui
+    }
+});
+
 
 // 4. ATALHOS DE TECLADO
 document.addEventListener('keydown', (event) => {

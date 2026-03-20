@@ -96,3 +96,21 @@ function toggleFullScreen(event) {
 
 setInterval(updateVortex, 1000);
 updateVortex();
+
+document.addEventListener('keydown', (event) => {
+    // Tecla 'F' ou 'f' para Tela Cheia
+    if (event.key.toLowerCase() === 'f') {
+        toggleFullScreen(event);
+    }
+
+    // Tecla 'Espaço' para Pausar/Retomar (Útil se você tiver cronômetro ou foco)
+    if (event.code === 'Space') {
+        event.preventDefault(); // Evita que a página role para baixo
+        // Aqui você chamaria sua função de pause/start do cronômetro
+        console.log("Espaço pressionado - Comando de pausa/play");
+    }
+
+    // Tecla 'M' para ir para o Mundo, 'C' para Cronômetro
+    if (event.key.toLowerCase() === 'm') window.location.href = 'global.html';
+    if (event.key.toLowerCase() === 'c') window.location.href = 'cronometro.html';
+});

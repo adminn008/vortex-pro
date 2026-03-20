@@ -1,27 +1,8 @@
-// COLOQUE ISSO NA PRIMEIRA LINHA DO SEU SCRIPT.JS
-getCityByIP(); 
-
+// 1. LOCALIZAÇÃO (CIDADE)
 async function getCityByIP() {
-    // ... resto do código ...
-}
-
-    // Tenta a primeira API (ipapi.co)
+    const elementoLocal = document.getElementById('vortex-location');
     try {
-        // No seu script.js, troque a linha do 'fetch' por esta:
-const response = await fetch('https://ipwho.is/');
-const data = await response.json();
-
-// E ajuste o if para:
-if (data && data.city) {
-    document.getElementById('vortex-location').textContent = `Horário de ${data.city}`;
-}
-
-    } catch (e) {
-        console.log("Tentando segunda opção de localização...");
-    }
-
-    // Se a primeira falhar, tenta a segunda (ip-api.com via HTTPS)
-    try {
+        // Usando a ipwho.is que é mais rápida e estável
         const response = await fetch('https://ipwho.is/');
         const data = await response.json();
         
@@ -31,14 +12,12 @@ if (data && data.city) {
             elementoLocal.textContent = "Horário Local";
         }
     } catch (e) {
+        console.error("Erro na localização:", e);
         elementoLocal.textContent = "Horário Local";
-        console.error("Todas as APIs de localização falharam.");
     }
 }
 
-// Chame a função no final do arquivo
-getCityByIP();
-
+// 2. RELÓGIO E DATA
 let ultimaData = "";
 
 function updateVortex() {
@@ -48,36 +27,34 @@ function updateVortex() {
     const h = String(agora.getHours()).padStart(2, '0');
     const m = String(agora.getMinutes()).padStart(2, '0');
     const s = String(agora.getSeconds()).padStart(2, '0');
-    document.getElementById('vortex-clock').textContent = `${h}:${m}:${s}`;
+    
+    const clockEl = document.getElementById('vortex-clock');
+    if (clockEl) clockEl.textContent = `${h}:${m}:${s}`;
 
     // Datas
     const opcoes = { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' };
     const dataFormatada = agora.toLocaleDateString('pt-BR', opcoes);
     const dataFinal = dataFormatada.charAt(0).toUpperCase() + dataFormatada.slice(1);
 
-    // Se a data mudou (ou é a primeira vez que carrega)
     if (dataFinal !== ultimaData) {
         const elementoTopo = document.getElementById('vortex-date');
         const elementoRodape = document.getElementById('footer-full-date');
 
-        // Aplica a animação de fade
-        elementoTopo.classList.add('fade-effect');
-        elementoRodape.classList.add('fade-effect');
-
-        // Atualiza o texto
-        elementoTopo.textContent = dataFinal;
-        elementoRodape.textContent = dataFinal;
-
-        // Remove a classe após a animação terminar para poder usar de novo amanhã
-        setTimeout(() => {
-            elementoTopo.classList.remove('fade-effect');
-            elementoRodape.classList.remove('fade-effect');
-        }, 1000);
+        if (elementoTopo) {
+            elementoTopo.textContent = dataFinal;
+            elementoTopo.classList.add('fade-effect');
+            setTimeout(() => elementoTopo.classList.remove('fade-effect'), 1000);
+        }
+        
+        if (elementoRodape) {
+            elementoRodape.textContent = dataFinal;
+        }
 
         ultimaData = dataFinal;
     }
 }
 
+// 3. FUNÇÕES DE UTILIDADE (PIX E TELA CHEIA)
 function copyPix(chave) {
     const txt = document.getElementById('pix-text');
     navigator.clipboard.writeText(chave).then(() => {
@@ -87,16 +64,12 @@ function copyPix(chave) {
 }
 
 function toggleFullScreen(event) {
-    // 1. Se clicar no botão de PIX, não faz nada (deixa o copyPix trabalhar)
     if (event.target.closest('.pix-button')) return;
-
-    // 2. Se clicar em qualquer lugar do rodapé (links incluídos), NÃO ativa tela cheia
     if (event.target.closest('.footer-area')) return;
 
-    // 3. Lógica da tela cheia
     if (!document.fullscreenElement) {
         document.documentElement.requestFullscreen().catch(err => {
-            console.log(`Erro ao tentar ativar tela cheia: ${err.message}`);
+            console.log(`Erro ao ativar tela cheia: ${err.message}`);
         });
     } else {
         if (document.exitFullscreen) {
@@ -105,26 +78,16 @@ function toggleFullScreen(event) {
     }
 }
 
-// As outras funções (updateVortex e copyPix) continuam iguais ao código anterior.
+// 4. ATALHOS DE TECLADO
+document.addEventListener('keydown', (event) => {
+    const key = event.key.toLowerCase();
+    if (key === 'f') toggleFullScreen(event);
+    if (key === 'm') window.location.href = 'global.html';
+    if (key === 'c') window.location.href = 'cronometro.html';
+    if (event.code === 'Space') event.preventDefault();
+});
 
-
+// 5. INICIALIZAÇÃO (Onde a mágica começa)
+getCityByIP();
 setInterval(updateVortex, 1000);
 updateVortex();
-
-document.addEventListener('keydown', (event) => {
-    // Tecla 'F' ou 'f' para Tela Cheia
-    if (event.key.toLowerCase() === 'f') {
-        toggleFullScreen(event);
-    }
-
-    // Tecla 'Espaço' para Pausar/Retomar (Útil se você tiver cronômetro ou foco)
-    if (event.code === 'Space') {
-        event.preventDefault(); // Evita que a página role para baixo
-        // Aqui você chamaria sua função de pause/start do cronômetro
-        console.log("Espaço pressionado - Comando de pausa/play");
-    }
-
-    // Tecla 'M' para ir para o Mundo, 'C' para Cronômetro
-    if (event.key.toLowerCase() === 'm') window.location.href = 'global.html';
-    if (event.key.toLowerCase() === 'c') window.location.href = 'cronometro.html';
-});

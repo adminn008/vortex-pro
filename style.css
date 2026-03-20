@@ -51,16 +51,23 @@ body, html {
     font-variant-numeric: tabular-nums;
 }
 
+/* Estilo para a Cidade voltar a ser Verde e Brilhante */
 .vortex-region {
-    font-size: 1.2rem; /* Aumenta o tamanho do nome da cidade */
-    color: #444;       /* Cinza elegante */
+    font-size: 1.2rem;            /* Tamanho médio/grande */
+    color: #00ff41;               /* O VERDE do Vortex */
     text-transform: uppercase;
-    letter-spacing: 4px;
+    letter-spacing: 5px;          /* Espaçamento elegante entre letras */
     font-weight: bold;
     margin-top: 20px;
-    display: block !important; /* Garante que apareça */
+    text-shadow: 0 0 10px rgba(0, 255, 65, 0.5); /* Brilho neon suave */
+    opacity: 0.8;                 /* Um pouco de transparência para dar classe */
+    transition: all 0.5s ease;
 }
 
+/* Garante que o ID também pegue a cor se a classe falhar */
+#vortex-location {
+    color: #00ff41 !important;
+}
 
 /* Esconder elementos quando em Tela Cheia */
 :fullscreen .hide-on-fs {

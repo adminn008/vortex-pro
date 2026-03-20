@@ -153,3 +153,16 @@ body, html {
     z-index: 10; /* Fica por cima para receber o clique corretamente */
 }
 
+.vortex-footer {
+    font-size: 0.75rem;
+    opacity: 0.6;
+}
+
+/* Dica de atalho que aparece só quando o mouse passa no rodapé */
+.footer-nav::after {
+    content: "Dica: Use [F] para tela cheia e [M] para o mundo";
+    display: block;
+    font-size: 0.6rem;
+    color: #00ff41;
+    margin-top: 5px;
+}

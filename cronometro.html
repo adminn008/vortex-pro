@@ -1,8 +1,29 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8"><title>Chronos Lab | Cronómetro</title>
+    <meta charset="UTF-8">
+    <title>Chronos Lab | Cronômetro</title>
     <link rel="stylesheet" href="style-tools.css">
+    <style>
+        /* Estilo extra para a lista de voltas não quebrar o layout */
+        #laps {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+            max-height: 200px;
+            overflow-y: auto;
+            border-top: 1px solid #333;
+        }
+        .lap-item {
+            padding: 10px;
+            border-bottom: 1px solid #1a1a1a;
+            color: #00ff41;
+            font-family: monospace;
+            display: flex;
+            justify-content: space-between;
+        }
+        .lap-number { color: #555; }
+    </style>
 </head>
 <body>
     <div class="tool-container">
@@ -11,25 +32,51 @@
         <div class="controls">
             <button onclick="start()">INICIAR</button>
             <button onclick="pause()">PAUSAR</button>
-            <button onclick="reset()">LIMPAR</button>
+            <button onclick="lap()">VOLTA</button> <button onclick="reset()">LIMPAR</button>
         </div>
         <ul id="laps"></ul>
     </div>
     <script>
         let startTime, elapsedTime = 0, timerInterval;
+        let running = false; // Trava de segurança
+        let lapCount = 0;
+
         function start() {
-            startTime = Date.now() - elapsedTime;
-            timerInterval = setInterval(() => {
-                elapsedTime = Date.now() - startTime;
-                print(timeToString(elapsedTime));
-            }, 10);
+            if (!running) { // Impede duplicar o intervalo
+                running = true;
+                startTime = Date.now() - elapsedTime;
+                timerInterval = setInterval(() => {
+                    elapsedTime = Date.now() - startTime;
+                    print(timeToString(elapsedTime));
+                }, 10);
+            }
         }
-        function pause() { clearInterval(timerInterval); }
+
+        function pause() { 
+            running = false;
+            clearInterval(timerInterval); 
+        }
+
         function reset() {
+            running = false;
             clearInterval(timerInterval);
             print("00:00:00.00");
             elapsedTime = 0;
+            lapCount = 0;
+            document.getElementById("laps").innerHTML = ""; // Limpa as voltas
         }
+
+        function lap() {
+            if (running) {
+                lapCount++;
+                const li = document.createElement("li");
+                li.className = "lap-item";
+                li.innerHTML = `<span class="lap-number">VOLTA ${String(lapCount).padStart(2, "0")}</span> <span>${timeToString(elapsedTime)}</span>`;
+                const list = document.getElementById("laps");
+                list.insertBefore(li, list.firstChild); // Coloca a mais recente no topo
+            }
+        }
+
         function timeToString(time) {
             let diffInHrs = time / 3600000;
             let hh = Math.floor(diffInHrs);
@@ -41,6 +88,7 @@
             let ms = Math.floor(diffInMs);
             return `${String(hh).padStart(2,"0")}:${String(mm).padStart(2,"0")}:${String(ss).padStart(2,"0")}.${String(ms).padStart(2,"0")}`;
         }
+
         function print(txt) { document.getElementById("display").innerHTML = txt; }
     </script>
 </body>

@@ -66,7 +66,7 @@ function copyPix(chave) {
 function toggleFullScreen() {
     if (!document.fullscreenElement) {
         document.documentElement.requestFullscreen().catch(err => {
-            console.log(`Erro: ${err.message}`);
+            console.warn(`Erro ao ativar tela cheia: ${err.message}`);
         });
     } else {
         if (document.exitFullscreen) {
@@ -74,6 +74,7 @@ function toggleFullScreen() {
         }
     }
 }
+
 
 // O navegador já cuida do "ESC" e do "Voltar" do Android sozinho 
 // quando usamos a API de Fullscreen, mas vamos garantir que o 

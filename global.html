@@ -1,16 +1,71 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8"><title>Global Vortex | Mundo</title>
+    <meta charset="UTF-8">
+    <title>Global Vortex | Mundo</title>
     <link rel="stylesheet" href="style-tools.css">
+    <style>
+        /* CSS para deixar responsivo e bonito */
+        .world-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .city-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid #1a1a1a;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .city-card:hover {
+            border-color: #00ff41;
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.1);
+        }
+
+        .city-card h2 {
+            font-size: 0.9rem;
+            color: #888;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .city-time {
+            font-size: 1.5rem;
+            font-family: monospace;
+            color: #00ff41;
+        }
+
+        #search-city {
+            background: #000;
+            border: 1px solid #333;
+            color: #fff;
+            padding: 10px;
+            width: 100%;
+            max-width: 400px;
+            margin: 20px auto;
+            display: block;
+            border-radius: 5px;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
     <div class="tool-container">
         <h1>GLOBAL VORTEX</h1>
+        
+        <input type="text" id="search-city" placeholder="🔍 Buscar cidade..." onkeyup="updateWorld()">
+
         <div class="world-grid" id="world-grid"></div>
     </div>
+
     <script>
-    // Lista de cidades com Bandeira, Nome e Fuso Horário (Timezone)
     const cities = [
         { name: '🇧🇷 São Paulo', tz: 'America/Sao_Paulo' },
         { name: '🇺🇸 Nova Iorque', tz: 'America/New_York' },
@@ -28,9 +83,12 @@
 
     function updateWorld() {
         const grid = document.getElementById('world-grid');
+        const searchTerm = document.getElementById('search-city').value.toLowerCase();
         
-        // Gera os cartões de cada cidade automaticamente
-        grid.innerHTML = cities.map(c => {
+        // Filtra as cidades baseadas na busca
+        const filteredCities = cities.filter(c => c.name.toLowerCase().includes(searchTerm));
+
+        grid.innerHTML = filteredCities.map(c => {
             const time = new Date().toLocaleTimeString('pt-BR', { 
                 timeZone: c.tz,
                 hour: '2-digit',
@@ -41,17 +99,13 @@
             return `
                 <div class="city-card">
                     <h2>${c.name}</h2>
-                    <p>${time}</p>
+                    <p class="city-time">${time}</p>
                 </div>`;
         }).join('');
     }
 
-    // Atualiza a cada 1 segundo
     setInterval(updateWorld, 1000);
-    // Chama uma vez ao carregar para não esperar 1 segundo
     updateWorld();
-</script>
-
-
+    </script>
 </body>
 </html>
